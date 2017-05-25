@@ -51,3 +51,151 @@ console.log(object1.name + ' ' + object1.age);
 console.log(object2.name + ' ' + object2.age);
 console.log(object3.name + ' ' + object3.age);
 console.log('');
+
+
+
+// compare __proto__ with Object.prototype
+console.log('compare __proto__ with Object.prototype : ');
+let object4 = {name:'Tucker'};
+console.log(object4.__proto__ == Object.prototype);
+console.log('');
+
+
+
+// compare function with constructor
+console.log('compare function with constructor : ');
+function Student4 () {
+	this.name = 'Marking';
+}
+let var_1_student4 = new Student4();
+
+console.log(var_1_student4.__proto__.constructor == Student4);
+console.log(var_1_student4.__proto__ == Student4.prototype);
+console.log('');
+
+
+
+// property by proto vs by this keyword 
+console.log('property by proto vs by this keyword : ');
+function Student5 (name) {
+	this.name = name;
+}
+
+Student5.prototype.printName = function () {
+	console.log(this.name);
+}
+
+function School (name) {
+	this.name = name;
+	this.printName = function () {
+		console.log(this.name);
+	}
+}
+
+let var_1_student5 = new Student5('Mark V 1'), 
+	var_2_student5 = new Student5('Mark V 2'),
+	var_1_school = new School('Mark V 1 School'),
+	var_2_school = new School('Mark V 2 School');
+
+console.log(var_1_student5.printName == var_2_student5.printName);
+console.log(var_1_school.printName == var_2_school.printName);
+console.log('');
+
+
+
+// implement inheritance
+console.log('implement inheritance : ');
+function School2 (schoolName) {
+	this.schoolName = schoolName;
+}
+
+School2.prototype.printSchoolName = function () {
+	console.log(this.schoolName);
+};
+
+function Student6 (studentName, schoolName) {
+	this.studentName = studentName;
+	School2.call(this, schoolName);
+}
+
+Student6.prototype = new School2();
+Student6.prototype.printStudentName = function () {
+	console.log(this.studentName);
+}
+
+let var_1_student6 = new Student6('Mark II', 'ABC School');
+var_1_student6.printStudentName();
+var_1_student6.printSchoolName();
+console.log('');
+
+
+
+// the constructor of primitive data types
+console.log('the constructor of primitive data types : ');
+let var_1_string = 'String', 
+	var_2_string = new String('String');
+console.log(typeof var_1_string);
+console.log(typeof var_2_string);
+console.log(var_1_string == var_2_string);
+console.log(var_1_string.length);
+
+console.log(var_1_string == var_2_string.valueOf());
+console.log((new String(var_1_string).length));
+console.log('');
+
+
+
+// defining a class
+console.log('defining a class : ');
+class Student7 {
+	constructor(name) {
+		this.name = name;
+	}
+}
+let var_1_student7 = new Student7('Mark III');
+console.log(var_1_student7.name);
+
+console.log(typeof Student7);
+console.log(typeof School2 == typeof Student7);
+console.log('');
+
+
+
+// the class expression
+console.log('the class expression : ');
+let Student8 = class {
+		constructor (name) {
+			this.name = name;
+		}
+	}, 
+	
+	Student9 = function (name) {
+		this.name = name;
+	},
+
+	var_1_student8 = new Student8('Mark IV'),
+	var_1_student9 = new Student9('Mark V');
+console.log(var_1_student8.name);
+console.log(var_1_student9.name);
+console.log('');
+
+
+
+// the prototype methods
+console.log('the prototype methods : ');
+class Person1 {
+	constructor (name, age) {
+		this.name = name;
+		this.age = age;
+	}
+
+	printProfile () {
+		console.log('Name is : ' + this.name + 
+			" and Age is : " + this.age);
+	}
+}
+
+let var_1_person1 = new Person1('Mark VI', 12);
+var_1_person1.printProfile();
+console.log('printProfile' in var_1_person1.__proto__);
+console.log('printProfile' in Person1.prototype);
