@@ -199,3 +199,33 @@ let var_1_person1 = new Person1('Mark VI', 12);
 var_1_person1.printProfile();
 console.log('printProfile' in var_1_person1.__proto__);
 console.log('printProfile' in Person1.prototype);
+
+
+
+// get and set methods
+console.log('get and set methods : ');
+class Person2 {
+	constructor (name) {
+		this.__name__ = name;
+	}
+
+	get name () {
+		return this.__name__;
+	}
+
+	set name (name) {
+		this.__name__ = name;
+	}
+}
+
+let var_1_person2 = new Person2('Mark VII');
+console.log(var_1_person2.name);
+
+var_1_person2.name = 'John';
+console.log(var_1_person2.name);
+
+console.log('name' in var_1_person2.__proto__);
+console.log('name' in Person2.prototype);
+console.log(Object.getOwnPropertyDescriptor(var_1_person2.__proto__, 'name').set);
+console.log(Object.getOwnPropertyDescriptor(Person2.prototype, 'name').get);
+console.log(Object.getOwnPropertyDescriptor(var_1_person2, '__name__').value);
