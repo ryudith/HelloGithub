@@ -229,3 +229,132 @@ console.log('name' in Person2.prototype);
 console.log(Object.getOwnPropertyDescriptor(var_1_person2.__proto__, 'name').set);
 console.log(Object.getOwnPropertyDescriptor(Person2.prototype, 'name').get);
 console.log(Object.getOwnPropertyDescriptor(var_1_person2, '__name__').value);
+console.log('');
+
+
+
+// generator method
+console.log('generator method : ');
+class MyClass1 {
+	* generator_function () {
+		yield 1;
+		yield 2;
+		yield 3;
+		yield 4;
+		yield 5;
+	}
+}
+
+let var_1_myclass1 = new MyClass1(), generator = var_1_myclass1.generator_function();
+console.log(generator.next().value);
+console.log(generator.next().value);
+console.log(generator.next().value);
+console.log(generator.next().value);
+console.log(generator.next().value);
+console.log(generator.next().done);
+console.log('generator_function' in MyClass1.prototype);
+console.log('');
+
+
+
+// static method
+console.log('static method : ');
+class Student10 {
+	constructor (name) {
+		this.name = name;
+	}
+
+	static findName (student) {
+		return student.name;
+	}
+}
+
+function Student11 (name) {
+	this.name = name;
+}
+Student11.findName = function (student) {
+	return student.name;
+}
+
+let var_1_student10 = new Student10('Mark IX'), var_1_student11 = new Student11('Mark X');
+console.log(Student10.findName(var_1_student10));
+console.log(Student11.findName(var_1_student11));
+console.log('');
+
+
+
+// class inheritance
+console.log('class Inheritance : ');
+function A (a) {
+	this.a = a;
+}
+A.prototype.printA = function () {
+	console.log(this.a);
+}
+
+class B extends A {
+	constructor (a, b) {
+		super(a);
+		this.b = b;
+	}
+
+	printB () {
+		console.log(this.b);
+	}
+
+	static sayHello () {
+		console.log('hello');
+	}
+}
+
+class C extends B {
+	constructor (a, b, c) {
+		super(a,b);
+		this.c = c;
+	}
+
+	printC () {
+		console.log(this.c);
+	}
+
+	printAll () {
+		this.printC();
+		super.printB();
+		super.printA();
+	}
+}
+
+let var_1_c = new C(1,2,3);
+var_1_c.printAll();
+C.sayHello();
+console.log('');
+
+
+
+// the computed method name
+console.log('the computed method name : ');
+class MyClass2 {
+	static ['my' + 'Method'] () {
+		console.log('hello');
+	}
+}
+MyClass2['my' + 'Method']();
+console.log();
+
+
+
+// overriding constructor method
+console.log('overriding constructor method : ');
+class MyClass3 {
+	constructor () {
+		return Object.create(null);
+	}
+}
+
+console.log(new MyClass3() instanceof MyClass3);
+console.log();
+
+
+
+// the Symbol.species static accessor property
+console.log('the Symbol.species static accessor property : ');
