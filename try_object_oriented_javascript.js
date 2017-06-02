@@ -358,3 +358,96 @@ console.log();
 
 // the Symbol.species static accessor property
 console.log('the Symbol.species static accessor property : ');
+class MyCustomArray1 extends Array {
+	static get [Symbol.species]() {
+		return Array;
+	}
+}
+
+class MyCustomArray2 extends Array {
+
+}
+
+let var_arr_1 = new MyCustomArray1(0,1,2,3,4), 
+	var_arr_2 = new MyCustomArray2(0,1,2,3,4);
+
+console.log(var_arr_1 instanceof MyCustomArray1);
+console.log(var_arr_2 instanceof MyCustomArray2);
+
+let var_arr_1a = var_arr_1.map(function(value){
+	return value + 1;
+}), var_arr_2a = var_arr_2.map(function(value){
+	return value + 1;
+});
+console.log(var_arr_1a instanceof MyCustomArray1);
+console.log(var_arr_2a instanceof MyCustomArray2);
+
+console.log(var_arr_1 instanceof Array);
+console.log(var_arr_2 instanceof Array);
+console.log();
+
+
+
+// using @@species
+console.log('using @@species : ');
+class MyArray1 {
+	//default @@species. Child class will inherit this property
+	static get [Symbol.species]() {
+		// default constructor
+		return this;
+	}
+
+	mapping () {
+		return new this.constructor[Symbol.species]();
+	}
+}
+
+class MyArray2 extends MyArray1{
+	static get [Symbol.species]() {
+		return MyArray1;
+	}
+}
+
+let var_myarray_2 = new MyArray2();
+console.log(var_myarray_2 instanceof MyArray2);
+
+let var_myarray_1 = var_myarray_2.mapping();
+console.log(var_myarray_1 instanceof MyArray1);
+console.log();
+
+
+
+// new.target implicit parameter
+console.log('new.target implicit parameter : ');
+function MyConstructor () {
+	console.log(new.target.name);
+}
+class MyClass4 extends MyConstructor {
+	constructor () {
+		super();
+	}
+}
+
+let obj4 = new MyClass4();
+let obj5 = new MyConstructor();
+console.log();
+
+
+
+// using super in the object literals
+console.log('using super in the object literals : ');
+let obj6 = {
+	print () {
+		console.log('hello');
+	}
+};
+
+let obj7 = {
+	print () {
+		super.print();
+	}
+};
+
+Object.setPrototypeOf(obj7, obj6);
+obj7.print();
+console.log();
