@@ -24,12 +24,12 @@ promise3.then(function(contents){
 
 
 function addVal (a, b) {
-	console.log(a , b);
+	console.log('inside', a , b);
 	return a + b;
 }
-let addFunc = q.denodeify(addVal),
-	promise4 = addFunc(1, 2);
-promise4.then(function(res){
+/*let addFunc = q.denodeify(addVal),
+	promise4 = addFunc(1, 2);*/
+return q.fcall(addVal, 1 ,2 ).then(function(res){
 	console.log(res);
 	return res + 1;
 }).then(function(res){
