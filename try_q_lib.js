@@ -24,6 +24,7 @@ promise3.then(function(contents){
 
 
 function addVal (a, b) {
+	console.log(a , b);
 	return a + b;
 }
 let addFunc = q.denodeify(addVal),
